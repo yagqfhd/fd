@@ -16,6 +16,10 @@ namespace FuDong.DAL.UnitOfWorks
     [Export(typeof(DbContext))]
     public class EFDbContext : DbContext
     {
+        static EFDbContext()
+        {
+
+        }
         public EFDbContext()
             : base("default") { }
 

@@ -21,7 +21,7 @@ namespace GanGao.API.Controllers
     /// </summary>    
     [RoutePrefix("Api/Role")]
     [Description("角色管理")]
-    public class RoleController : BaseController<string,RoleEntity,RoleDTO,IRoleService>
+    public class RoleController : BaseController<string,RoleEntity,RoleDTO,IRoleService<string,RoleEntity>>
     {
         #region ///           属性定义
         //IOC获取角色服务        

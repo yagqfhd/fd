@@ -14,7 +14,7 @@ namespace GanGao.Data.Configurations.CheckOnWork
         public QdRecordConfiguration()
         {
             // 表名次定义
-            this.ToTable("Sys_WorkTimes");
+            this.ToTable("Sys_QdRecords");
             //主键定义
             this.HasKey(m => m.Id);
             //索引定义

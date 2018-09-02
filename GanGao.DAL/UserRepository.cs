@@ -9,19 +9,19 @@ namespace GanGao.DAL
     /// <summary>
     ///     仓储操作实现——用户信息
     /// </summary>
-    [Export(typeof(IUserRepository))]
+    [Export(typeof(IUserRepository<string,UserEntity>))]
     public class UserRepository :
         RepositoryBase<string, UserEntity>,
-        IUserRepository
+        IUserRepository<string, UserEntity>
     { }
 
     /// <summary>
     ///    仓储操作实现 -- 用户部门关系
     /// </summary>
-    [Export(typeof(IUserDepartmentRepository))]
+    [Export(typeof(IUserDepartmentRepository<string, UserDepartmentRelation>))]
     public class UserDepartmentRepository : 
         RelationRepositoryBase<string, UserDepartmentRelation>,
-        IUserDepartmentRepository
+        IUserDepartmentRepository<string, UserDepartmentRelation>
     {
 
     }
@@ -29,10 +29,10 @@ namespace GanGao.DAL
     /// <summary>
     ///    仓储操作实现 -- 用户部门角色关系
     /// </summary>
-    [Export(typeof(IUserDepartmentRoleRepository))]
+    [Export(typeof(IUserDepartmentRoleRepository<string, UserDepartmentRoleRelation>))]
     public class UserDepartmentRoleRepository : 
         RelationRepositoryBase<string, UserDepartmentRoleRelation>,
-        IUserDepartmentRoleRepository
+        IUserDepartmentRoleRepository<string, UserDepartmentRoleRelation>
     {
 
     }

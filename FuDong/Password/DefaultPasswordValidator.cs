@@ -8,7 +8,7 @@ namespace FuDong.Password
     /// <summary>
     /// 密码校验生成
     /// </summary>
-    //[Export(typeof(IPasswordValidator))]
+    [Export(typeof(IPasswordValidator))]
     public class DefaultPasswordValidator : IPasswordValidator
     {
         /// <summary>

@@ -1,6 +1,4 @@
 ﻿using FuDong.Common;
-using GanGao.Data.DTO;
-using GanGao.Data.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,7 +7,8 @@ namespace GanGao.Interfaces
     /// <summary>
     /// 服务层 用户信息服务接口
     /// </summary>
-    public interface IUserService : IServices<string, UserEntity,UserDTO>
+    public interface IUserService<TKey,TEntity> : IServices<TKey, TEntity>
+        where TEntity : EntityBase<TKey> , IDefaultEntity<TKey>
     {        
         #region /// 用户登录相关
 
@@ -28,31 +27,31 @@ namespace GanGao.Interfaces
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        Task<UserDTO> FindByNameAsync(string name);
+        Task<TEntity> FindByNameAsync(string name);
         /// <summary>
         /// 按照Email查询用户
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        Task<UserDTO> FindByEmailAsync(string email);
+        Task<TEntity> FindByEmailAsync(string email);
         /// <summary>
         /// 按照用户身份证查询用户
         /// </summary>
         /// <param name="access"></param>
         /// <returns></returns>
-        Task<UserDTO> FindByIdCardAsync(string access);
+        Task<TEntity> FindByIdCardAsync(string access);
         /// <summary>
         /// 按照用户手机号查询用户
         /// </summary>
         /// <param name="access"></param>
         /// <returns></returns>
-        Task<UserDTO> FindByPhoneNumberAsync(string access);
+        Task<TEntity> FindByPhoneNumberAsync(string access);
         /// <summary>
         /// 按照用户微信查询用户
         /// </summary>
         /// <param name="access"></param>
         /// <returns></returns>
-        Task<UserDTO> FindByWXAsync(string access);
+        Task<TEntity> FindByWXAsync(string access);
         #endregion
 
         #region //// 部门相关
@@ -69,7 +68,7 @@ namespace GanGao.Interfaces
         /// <param name="userName"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        Task<OperationResult> InDepartmentAsync(UserEntity user, string departmentName);
+        Task<OperationResult> InDepartmentAsync(TEntity user, string departmentName);
         /// <summary>
         /// 添加用户到部门中
         /// </summary>
@@ -83,7 +82,7 @@ namespace GanGao.Interfaces
         /// <param name="userName"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        Task<OperationResult> AddDepartmentAsync(UserEntity user, string departmentName);
+        Task<OperationResult> AddDepartmentAsync(TEntity user, string departmentName);
         /// <summary>
         /// 移除用户从部门中
         /// </summary>
@@ -97,7 +96,7 @@ namespace GanGao.Interfaces
         /// <param name="userName"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        Task<OperationResult> RemoveDepartmentAsync(UserEntity user, string departmentName);
+        Task<OperationResult> RemoveDepartmentAsync(TEntity user, string departmentName);
         #endregion
 
         #region //// 角色相关
@@ -114,7 +113,7 @@ namespace GanGao.Interfaces
         /// <param name="userName"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        Task<OperationResult> IsRoleAsync(UserEntity user, string departmentName, string roleName);
+        Task<OperationResult> IsRoleAsync(TEntity user, string departmentName, string roleName);
         /// <summary>
         /// 添加角色到用户部门中
         /// </summary>
@@ -128,7 +127,7 @@ namespace GanGao.Interfaces
         /// <param name="userName"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        Task<OperationResult> AddRoleAsync(UserEntity user, string departmentName, string roleName);
+        Task<OperationResult> AddRoleAsync(TEntity user, string departmentName, string roleName);
         /// <summary>
         /// 移除角色从用户部门中
         /// </summary>
@@ -142,7 +141,7 @@ namespace GanGao.Interfaces
         /// <param name="userName"></param>
         /// <param name="departmentName"></param>
         /// <returns></returns>
-        Task<OperationResult> RemoveRoleAsync(UserEntity user, string departmentName, string roleName);
+        Task<OperationResult> RemoveRoleAsync(TEntity user, string departmentName, string roleName);
         #endregion        
 
         #region /////// 权限验证相关
@@ -157,7 +156,7 @@ namespace GanGao.Interfaces
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        Task<IEnumerable<string>> GetPermissionFlagsAsync(UserEntity user);
+        Task<IEnumerable<string>> GetPermissionFlagsAsync(TEntity user);
         #endregion
     }
 }

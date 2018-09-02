@@ -1,10 +1,7 @@
 ﻿using FuDong.Common;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 
 namespace FuDong.DAL
 {

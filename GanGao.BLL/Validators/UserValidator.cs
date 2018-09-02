@@ -15,7 +15,7 @@ namespace GanGao.BLL.Validators
     ///     校验实现——用户信息名称重名检查
     /// </summary>
     [Export(typeof(IEntityValidator<UserEntity>))]
-    public class UserValidator : ValidatorBase<string, UserEntity,IUserRepository>, IEntityValidator<UserEntity>
+    public class UserValidator : ValidatorBase<string, UserEntity,IUserRepository<string, UserEntity>>, IEntityValidator<UserEntity>
     {
         /// <summary>
         /// 校验方法重写

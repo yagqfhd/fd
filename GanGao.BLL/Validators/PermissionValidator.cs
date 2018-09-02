@@ -10,7 +10,7 @@ namespace GanGao.BLL.Validators
     ///     校验实现——权限信息名称重名检查
     /// </summary>
     [Export(typeof(IEntityValidator<PermissionEntity>))]
-    public class PermissionValidator:ValidatorBase<string, PermissionEntity, IPermissionRepository>, IEntityValidator<PermissionEntity>
+    public class PermissionValidator:ValidatorBase<string, PermissionEntity, IPermissionRepository<string, PermissionEntity>>, IEntityValidator<PermissionEntity>
     {
     }
 }

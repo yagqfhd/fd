@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace GanGao.WX.Models
+﻿namespace GanGao.WX.Models
 {
     /// <summary>
     /// 教师微信绑定

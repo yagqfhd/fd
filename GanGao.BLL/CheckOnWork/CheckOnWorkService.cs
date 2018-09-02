@@ -9,12 +9,14 @@ using System.ComponentModel.Composition;
 using GanGao.Interfaces;
 using System.Globalization;
 using GanGao.Data.Models.CheckOnWork;
+using GanGao.Data.Models;
 
 namespace GanGao.BLL.CheckOnWork
 {
     /// <summary>
     /// 教师签到服务层
     /// </summary>
+    [Export(typeof(ICheckOnWorkService))]
     public class CheckOnWorkService : ICheckOnWorkService
     {
 
@@ -31,23 +33,23 @@ namespace GanGao.BLL.CheckOnWork
         /// <summary>
         /// 签到记录仓储接口
         /// </summary>
-        [Import(typeof(IQdRecordRepository))]
-        IQdRecordRepository qdRecordStore;
+        [Import(typeof(IQdRecordRepository<string,QdRecordEntity>))]
+        IQdRecordRepository<string, QdRecordEntity> qdRecordStore=null;
         /// <summary>
         /// 工作时间仓储接口
         /// </summary>
-        [Import(typeof(IWrokTimeRepository))]
-        IWrokTimeRepository wrokTimeStore;
+        [Import(typeof(IWrokTimeRepository<string,WorkTimeEntity>))]
+        IWrokTimeRepository<string, WorkTimeEntity> wrokTimeStore = null;
         /// <summary>
         /// 调休时间仓储接口
         /// </summary>
-        [Import(typeof(IAdjustWrokTimeRepository))]
-        IAdjustWrokTimeRepository adjustWrokTimeStore;
+        [Import(typeof(IAdjustWrokTimeRepository<string,AdjustWorkTimeEntity>))]
+        IAdjustWrokTimeRepository<string, AdjustWorkTimeEntity> adjustWrokTimeStore = null;
         /// <summary>
         /// 用户仓储接口
         /// </summary>
-        [Import(typeof(IUserRepository))]
-        IUserRepository userStore;
+        [Import(typeof(IUserRepository<string,UserEntity>))]
+        IUserRepository<string, UserEntity> userStore = null;
 
 
 

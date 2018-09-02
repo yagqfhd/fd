@@ -9,7 +9,7 @@ namespace GanGao.BLL.Validators
     ///     校验实现——部门信息名称重名检查
     /// </summary>
     [Export(typeof(IEntityValidator<DepartmentEntity>))]
-    public class DepartmentValidator : ValidatorBase<string, DepartmentEntity, IDepartmentRepository>, IEntityValidator<DepartmentEntity>
+    public class DepartmentValidator : ValidatorBase<string, DepartmentEntity, IDepartmentRepository<string,DepartmentEntity>>, IEntityValidator<DepartmentEntity>
     {
         
     }

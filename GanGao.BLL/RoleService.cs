@@ -9,10 +9,10 @@ namespace GanGao.BLL
     /// <summary>
     /// 部门服务层
     /// </summary>
-    [Export(typeof(IRoleService))]
+    [Export(typeof(IRoleService<string, RoleEntity>))]
     public class RoleService:
-        DefaultServices<string, RoleEntity, RoleDTO, IRoleRepository>,
-        IRoleService
+        DefaultServices<string, RoleEntity,IRoleRepository<string, RoleEntity>>,
+        IRoleService<string, RoleEntity>
     {
     }
 }

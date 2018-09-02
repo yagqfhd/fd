@@ -16,22 +16,22 @@ namespace GanGao.BLL
     /// <summary>
     /// 权限服务层
     /// </summary>
-    [Export(typeof(IPermissionService))]
+    [Export(typeof(IPermissionService<string, PermissionEntity>))]
     public class PermissionService : 
-        DefaultServices<string, PermissionEntity, PermissionDTO, IPermissionRepository>, 
-        IPermissionService
+        DefaultServices<string, PermissionEntity,  IPermissionRepository<string, PermissionEntity>>, 
+        IPermissionService<string, PermissionEntity>
     {
         #region ////////////受保护的属性
         /// <summary>
         /// 部门信息存储访问对象
         /// </summary>
         [Import]
-        protected IDepartmentRepository departmentRepository { get; set; }
+        protected IDepartmentRepository<string, DepartmentEntity> departmentRepository { get; set; }
         /// <summary>
         /// 角色信息存储访问对象
         /// </summary>
         [Import]
-        protected IRoleRepository roleRepository { get; set; }
+        protected IRoleRepository<string, RoleEntity> roleRepository { get; set; }
         #endregion
 
         #region //// 部门相关增删改

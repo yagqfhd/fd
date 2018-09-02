@@ -2,17 +2,12 @@
 using FuDong.Data;
 using FuDong.Data.DTO;
 using GanGao.API.Models;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 
 namespace GanGao.API.Controllers
@@ -20,7 +15,7 @@ namespace GanGao.API.Controllers
     public abstract class BaseController<TKey,TEntity, TDTO, TIService> : ApiController
         where TEntity : DefaultEntity<TKey>
         where TDTO : DefaultEntityDTO<TKey>
-        where TIService : IServices<TKey,TEntity, TDTO>
+        where TIService : IServices<TKey,TEntity>
     {
         #region ///////// 内部使用方法
         /// <summary>
@@ -52,6 +47,8 @@ namespace GanGao.API.Controllers
         ///IOC获取角色服务        
         [Import]
         TIService Service { get; set; }
+        [Import]
+        IDTOMapService DTOMap { get; set; }
         #endregion
 
         #region //            添加
@@ -70,10 +67,11 @@ namespace GanGao.API.Controllers
                 return Ok(new ApiResultModel<bool>(this.GetModelStateError(ModelState)));
             //return BadRequest(this.GetModelStateError(ModelState));
             #endregion
+            var obj = DTOMap.Map<TEntity>(entity);
             try
             {
                 // 调用服务创建
-                var result = await Service.CreateAsync(entity);
+                var result = await Service.CreateAsync(obj);
                 // 根据服务返回值确定返回
                 if (result.ResultType == OperationResultType.Success)
                     return Ok(new ApiResultModel<bool>(true));
@@ -100,7 +98,8 @@ namespace GanGao.API.Controllers
             try
             {
                 var result = await Service.PageQueryable(page.skip, page.limit,page.order,page.filter);
-                return Ok(new ApiResultModel<PagedResult<TDTO>>(result));
+                var dtoResult = new PagedResult<TDTO>(result.TotalRecords, result.TotalPages, result.PageSize, result.PageNumber, DTOMap.Map<List<TDTO>>(result.Data));
+                return Ok(new ApiResultModel<PagedResult<TDTO>>(dtoResult));
             }
             catch(DataAccessException ex)
             {

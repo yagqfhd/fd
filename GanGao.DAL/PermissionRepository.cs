@@ -8,19 +8,19 @@ namespace GanGao.DAL
     /// <summary>
     ///     仓储操作接口——权限信息
     /// </summary>
-    [Export(typeof(IPermissionRepository))]
+    [Export(typeof(IPermissionRepository<string, PermissionEntity>))]
     public class PermissionRepository :
         RepositoryBase<string, PermissionEntity>,
-        IPermissionRepository
+        IPermissionRepository<string, PermissionEntity>
     { }
 
     /// <summary>
     ///    仓储操作实现 -- 权限部门关系
     /// </summary>
-    [Export(typeof(IPermissionDepartmentRepository))]
+    [Export(typeof(IPermissionDepartmentRepository<string, PermissionDepartmentRelation>))]
     public class PermissionDepartmentRepository :
         RelationRepositoryBase<string, PermissionDepartmentRelation>,
-        IPermissionDepartmentRepository
+        IPermissionDepartmentRepository<string, PermissionDepartmentRelation>
     {
 
     }
@@ -28,10 +28,10 @@ namespace GanGao.DAL
     /// <summary>
     ///    仓储操作实现 -- 权限部门角色关系
     /// </summary>
-    [Export(typeof(IPermissionDepartmentRoleRepository))]
+    [Export(typeof(IPermissionDepartmentRoleRepository<string, PermissionDepartmentRoleRelation>))]
     public class PermissionDepartmentRoleRepository :
         RelationRepositoryBase<string, PermissionDepartmentRoleRelation>,
-        IPermissionDepartmentRoleRepository
+        IPermissionDepartmentRoleRepository<string, PermissionDepartmentRoleRelation>
     {
 
     }

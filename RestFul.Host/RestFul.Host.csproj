@@ -82,12 +82,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GanGao.RESTful\GanGao.RESTful.csproj">
-      <Project>{d46338a2-52ac-4d1c-80cf-333f3ceda254}</Project>
-      <Name>GanGao.RESTful</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

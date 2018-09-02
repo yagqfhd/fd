@@ -8,9 +8,9 @@ namespace GanGao.DAL
     /// <summary>
     ///     仓储操作实现——部门信息
     /// </summary>
-    [Export(typeof(IDepartmentRepository))]
+    [Export(typeof(IDepartmentRepository<string, DepartmentEntity>))]
     public class DepartmentRepository :
         RepositoryBase<string, DepartmentEntity>,
-        IDepartmentRepository
+        IDepartmentRepository<string, DepartmentEntity>
     { }
 }

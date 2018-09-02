@@ -1,4 +1,5 @@
 ﻿using FuDong.Common;
+using GanGao.Data.Models;
 using GanGao.Interfaces;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -14,8 +15,8 @@ namespace GanGao.API
     /// <summary>
     /// OWIN.OAuth驱动
     /// </summary>
-    [Export(typeof(IOAuthAuthorizationServerProvider))]
-    public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
+    [Export(typeof(IOAuthServerProvider))]
+    public class AuthorizationServerProvider : OAuthAuthorizationServerProvider, IOAuthServerProvider
     {
         public AuthorizationServerProvider() : base()
         {
@@ -38,7 +39,7 @@ namespace GanGao.API
         /// 用户服务
         /// </summary>
         [Import]
-        private IUserService userService { get; set; } //  = new UserService(); //
+        private IUserService<string,UserEntity> userService { get; set; } //  = new UserService(); //
         #endregion
 
         #region ////// 方法实现

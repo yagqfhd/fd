@@ -1,7 +1,6 @@
 ﻿using FuDong.BLL;
 using FuDong.Common;
 using FuDong.Password;
-using GanGao.Data.DTO;
 using GanGao.Data.Models;
 using GanGao.Interfaces;
 using System;
@@ -16,31 +15,20 @@ namespace GanGao.BLL
     /// <summary>
     /// 用户服务层
     /// </summary>
-    [Export(typeof(IUserService))]
-    public class UserService : DefaultServices<string, UserEntity,UserDTO,IUserRepository>, IUserService
+    [Export(typeof(IUserService<string,UserEntity>))]
+    public class UserService : DefaultServices<string, UserEntity,IUserRepository<string, UserEntity>>, IUserService<string, UserEntity>
     {
         #region ////////////受保护的属性
-        ///// <summary>
-        ///// 获取或设置 用户部门信息数据访问对象
-        ///// </summary>
-        //[Import]
-        //protected IUserDepartmentRepository UserDepartmentRepository { get; set; }
-
-        ///// <summary>
-        ///// 获取或设置 用户部门角色信息数据访问对象
-        ///// </summary>
-        //[Import]
-        //protected IUserDepartmentRoleRepository UserDepartmentRoleRepository { get; set; }
         /// <summary>
         /// 部门信息存储访问对象
         /// </summary>
         [Import]
-        protected IDepartmentRepository departmentRepository { get; set; }
+        protected IDepartmentRepository<string,DepartmentEntity> departmentRepository { get; set; }
         /// <summary>
         /// 角色信息存储访问对象
         /// </summary>
         [Import]
-        protected IRoleRepository roleRepository { get; set; }
+        protected IRoleRepository<string, RoleEntity> roleRepository { get; set; }
         ///// <summary>
         ///// 获取或设置 用户信息校验对象
         ///// </summary>
@@ -56,7 +44,7 @@ namespace GanGao.BLL
         /// <summary>
         /// 密码校验生成对象
         /// </summary>
-        //[Import]
+        [Import]
         private IPasswordValidator _passwordValidator = new DefaultPasswordValidator();        
         #endregion
 
@@ -102,46 +90,46 @@ namespace GanGao.BLL
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual Task<UserDTO> FindByNameAsync(string name)
+        public virtual Task<UserEntity> FindByNameAsync(string name)
         {
             Argument.NullOrEmpty(name, "name");
             var user = Repository.Entities().SingleOrDefault(m => m.Name.Equals(name));
             if (user == null)
             {
-                return Task.FromResult<UserDTO>(null);
+                return Task.FromResult<UserEntity>(null);
             }
-            return Task.FromResult<UserDTO>(DtoMap.Map<UserDTO>(user));
+            return Task.FromResult<UserEntity>(user);
         }
         /// <summary>
         /// 按照Email查询用户
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public virtual Task<UserDTO> FindByEmailAsync(string email)
+        public virtual Task<UserEntity> FindByEmailAsync(string email)
         {
             Argument.NullOrEmpty(email, "email");
             var user = Repository.Entities().SingleOrDefault(m => m.Email.Equals(email));
             if (user == null)
             {
-                return Task.FromResult<UserDTO>(null);
+                return Task.FromResult<UserEntity>(null);
             }
-            return Task.FromResult<UserDTO>(DtoMap.Map<UserDTO>(user));
+            return Task.FromResult<UserEntity>(user);
         }
         /// <summary>
         /// 按照用户名身份证查询用户
         /// </summary>
         /// <param name="idCard"></param>
         /// <returns></returns>
-        public virtual Task<UserDTO> FindByIdCardAsync(string idCard)
+        public virtual Task<UserEntity> FindByIdCardAsync(string idCard)
         {
             Argument.NullOrEmpty(idCard, "IdCard");
             var user = Repository.Entities().SingleOrDefault(m => m.IdCard.Equals(idCard));
             if (user == null)
             {
-                return Task.FromResult<UserDTO>(null);
+                return Task.FromResult<UserEntity>(null);
             }
-            var UserDTO = DtoMap.Map<UserDTO>(user);
-            return Task.FromResult<UserDTO>(UserDTO);
+            //var UserDTO = DtoMap.Map<UserDTO>(user);
+            return Task.FromResult<UserEntity>(user);
         }
         /// <summary>
         /// 根据用户手机号查询用户
@@ -149,16 +137,16 @@ namespace GanGao.BLL
         /// <param name="access"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public virtual Task<UserDTO> FindByPhoneNumberAsync(string phoneNumber)
+        public virtual Task<UserEntity> FindByPhoneNumberAsync(string phoneNumber)
         {
             Argument.NullOrEmpty(phoneNumber, "phoneNumber");            
             // 获取用户
             var user = Repository.Entities().SingleOrDefault(m => m.PhoneNumber.Equals(phoneNumber));
             if (user == null)
             {
-                return Task.FromResult<UserDTO>(null);
+                return Task.FromResult<UserEntity>(null);
             }
-            return Task.FromResult<UserDTO>(DtoMap.Map<UserDTO>(user));
+            return Task.FromResult<UserEntity>(user);
         }
         /// <summary>
         /// 根据用户微信查询用户
@@ -166,16 +154,16 @@ namespace GanGao.BLL
         /// <param name="access"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public virtual Task<UserDTO> FindByWXAsync(string wx)
+        public virtual Task<UserEntity> FindByWXAsync(string wx)
         {
             Argument.NullOrEmpty(wx, "phoneNumber");
             // 获取用户
             var user = Repository.Entities().SingleOrDefault(m => m.WX.Equals(wx));
             if (user == null)
             {
-                return Task.FromResult<UserDTO>(null);
+                return Task.FromResult<UserEntity>(null);
             }
-            return Task.FromResult<UserDTO>(DtoMap.Map<UserDTO>(user));
+            return Task.FromResult<UserEntity>(user);
         }
         #endregion
 

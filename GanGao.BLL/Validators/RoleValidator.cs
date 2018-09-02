@@ -10,7 +10,7 @@ namespace GanGao.BLL.Validators
     ///     校验实现——用户信息名称重名检查
     /// </summary>
     [Export(typeof(IEntityValidator<RoleEntity>))]
-    public class RoleValidator:ValidatorBase<string, RoleEntity, IRoleRepository>, IEntityValidator<RoleEntity>
+    public class RoleValidator:ValidatorBase<string, RoleEntity, IRoleRepository<string, RoleEntity>>, IEntityValidator<RoleEntity>
     {
 
     }

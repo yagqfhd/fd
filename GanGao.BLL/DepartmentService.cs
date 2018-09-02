@@ -9,8 +9,8 @@ namespace GanGao.BLL
     /// <summary>
     /// 部门服务层
     /// </summary>
-    [Export(typeof(IDepartmentService))]
-    public class DepartmentService : DefaultServices<string, DepartmentEntity, DepartmentDTO, IDepartmentRepository>, IDepartmentService
+    [Export(typeof(IDepartmentService<string, DepartmentEntity>))]
+    public class DepartmentService : DefaultServices<string, DepartmentEntity, IDepartmentRepository<string, DepartmentEntity>>, IDepartmentService<string, DepartmentEntity>
     {
 
     }

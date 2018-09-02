@@ -11,9 +11,8 @@ namespace FuDong.BLL
     /// <summary>
     /// 核心业务实现基类
     /// </summary>
-    public class DefaultServices<TKey,TEntity, TDTO, TRepository> : IServices<TKey,TEntity, TDTO>
-        where TEntity : EntityBase<TKey>, IDefaultEntity<TKey>
-        where TDTO : class, IDefaultEntityDTO<TKey>
+    public class DefaultServices<TKey,TEntity,  TRepository> : IServices<TKey,TEntity>
+        where TEntity : EntityBase<TKey>, IDefaultEntity<TKey>       
         where TRepository : IRepository<TKey,TEntity>
     {
         #region ///////////属性
@@ -38,11 +37,11 @@ namespace FuDong.BLL
         /// </summary>
         [Import]
         protected IEntityValidator<TEntity> Validator { get; set; }
-        /// <summary>
-        /// 获取或设置 DTO MODEL 映射服务
-        /// </summary>
-        [Import]
-        protected IDTOMapService DtoMap { get; set; }
+        ///// <summary>
+        ///// 获取或设置 DTO MODEL 映射服务
+        ///// </summary>
+        //[Import]
+        //protected IDTOMapService DtoMap { get; set; }
         #endregion
 
         #region ///// 方法实现
@@ -51,12 +50,12 @@ namespace FuDong.BLL
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<OperationResult> CreateAsync(TDTO dto)
+        public virtual async Task<OperationResult> CreateAsync(TEntity obj)
         {
             //校验参数！=NULL
-            Argument.NullParam(dto, dto.GetVarName(li => dto));
+            Argument.NullParam(obj, obj.GetVarName(li => obj));
             // 实体模型转换
-            var obj = DtoMap.Map<TEntity>(dto);
+            //var obj = DtoMap.Map<TEntity>(dto);
             // 校验实体
             var validateResult = await Validator.ValidateAsync(obj);
             if (validateResult.ResultType != OperationResultType.Success)
@@ -72,12 +71,12 @@ namespace FuDong.BLL
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<OperationResult> CreateAsync(IEnumerable<TDTO> dtos)
+        public virtual async Task<OperationResult> CreateAsync(IEnumerable<TEntity> obj)
         {
             //校验参数！=NULL
-            Argument.NullParam(dtos, dtos.GetVarName(li => dtos));
+            Argument.NullParam(obj, obj.GetVarName(li => obj));
             // 实体模型转换
-            var obj = DtoMap.Map<IEnumerable<TEntity>>(dtos);
+            //var obj = DtoMap.Map<IEnumerable<TEntity>>(dtos);
             // 校验实体
             var validateResult = await Validator.ValidateAsync(obj);
             if (validateResult.ResultType != OperationResultType.Success)
@@ -93,7 +92,7 @@ namespace FuDong.BLL
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual Task<OperationResult> DeleteAsync(TDTO dto)
+        public virtual Task<OperationResult> DeleteAsync(TEntity dto)
         {
             //校验参数！=NULL
             Argument.NullParam(dto, dto.GetVarName(li => dto));
@@ -149,11 +148,11 @@ namespace FuDong.BLL
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual Task<OperationResult> DeleteAsync(IEnumerable<TDTO> dtos)
+        public virtual Task<OperationResult> DeleteAsync(IEnumerable<TEntity> objs)
         {
             //校验参数！=NULL
-            Argument.NullParam(dtos, dtos.GetVarName(li => dtos));
-            var objs = DtoMap.Map<IEnumerable<TEntity>>(dtos);
+            Argument.NullParam(objs, objs.GetVarName(li => objs));
+            //var objs = DtoMap.Map<IEnumerable<TEntity>>(dtos);
             try
             {
                 // 从实体集合删除
@@ -194,21 +193,21 @@ namespace FuDong.BLL
         /// <summary>
         /// 更新实体
         /// </summary>
-        /// <param name="dto"></param>
+        /// <param name="obj"></param>
         /// <returns></returns>
-        public virtual async Task<OperationResult> UpdateAsync(TDTO dto)
+        public virtual async Task<OperationResult> UpdateAsync(TEntity obj)
         {
             //校验参数！=NULL
-            Argument.NullParam(dto, dto.GetVarName(li => dto));
+            Argument.NullParam(obj, obj.GetVarName(li => obj));
             // 获取用户
-            var obj = Repository.FindById(dto.Id);
+            //var obj = Repository.FindById(dto.Id);
             if (obj == null)
                 return new OperationResult(OperationResultType.Warning,
                     String.Format(CultureInfo.CurrentCulture,
                     Resources.NoExist,
-                    dto.Name));
+                    obj.Name));
             // 实体模型转换
-            obj = DtoMap.Map<TDTO, TEntity>(dto, obj);
+            //obj = DtoMap.Map<TDTO, TEntity>(obj, obj);
             // 校验实体        
             var validateResult = await Validator.ValidateAsync(obj);
             if (validateResult.ResultType != OperationResultType.Success)
@@ -232,7 +231,7 @@ namespace FuDong.BLL
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual Task<OperationResult> ExistsAsync(TDTO dto)
+        public virtual Task<OperationResult> ExistsAsync(TEntity dto)
         {
             Argument.NullParam(dto, dto.GetVarName(li => dto));
             //获取实体
@@ -253,20 +252,18 @@ namespace FuDong.BLL
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public virtual Task<TDTO> FindByIdAsync(object key)
+        public virtual Task<TEntity> FindByIdAsync(object key)
         {
             Argument.NullParam(key, key.GetVarName(li => key));
             var obj = Repository.FindById(key);
-            TDTO result = null;
-            if (obj != null)
-                result = DtoMap.Map<TDTO>(obj);
-            return Task.FromResult<TDTO>(result);
+                
+            return Task.FromResult<TEntity>(obj);
         }
 
         /// <summary>
         /// 获取分页动态查询
         /// </summary>
-        public virtual Task<PagedResult<TDTO>> PageQueryable(int pageSize,int pageNumber,string Order = null, Dictionary<string, string> filter = null)
+        public virtual Task<PagedResult<TEntity>> PageQueryable(int pageSize,int pageNumber,string Order = null, Dictionary<string, string> filter = null)
         {
             var query = Repository.QueryableFilterEntities(filter);
             if (string.IsNullOrEmpty(Order) == false)
@@ -284,9 +281,9 @@ namespace FuDong.BLL
             //        Resources.PageError,pages,pageNumber));
 
             var objs = query.Skip(skip).Take(pageSize).ToList();
-            var dtos = DtoMap.Map<List<TDTO>>(objs);
+            //var dtos = DtoMap.Map<List<TDTO>>(objs);
             
-            return Task.FromResult<PagedResult<TDTO>>(new PagedResult<TDTO>(recs, pages, pageSize, pageNumber, dtos));
+            return Task.FromResult<PagedResult<TEntity>>(new PagedResult<TEntity>(recs, pages, pageSize, pageNumber, objs));
         }
         #endregion
     }

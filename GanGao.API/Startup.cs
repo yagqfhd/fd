@@ -7,6 +7,7 @@ using System.Web.Http;
 using Microsoft.Owin.Cors;
 using System.ComponentModel.Composition;
 using Microsoft.Owin.Security.Infrastructure;
+using GanGao.Data.Configurations;
 
 [assembly: OwinStartup(typeof(GanGao.API.Startup))]
 

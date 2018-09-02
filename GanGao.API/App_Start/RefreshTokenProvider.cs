@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Security.Infrastructure;
+﻿using GanGao.Interfaces;
+using Microsoft.Owin.Security.Infrastructure;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace GanGao.API
     /// <summary>
     /// 刷新Token驱动
     /// </summary>
-    [Export(typeof(IAuthenticationTokenProvider))]
-    public class RefreshTokenProvider : AuthenticationTokenProvider
+    [Export(typeof(IOAuthRefreshProvider))]
+    public class RefreshTokenProvider : AuthenticationTokenProvider, IOAuthRefreshProvider
     {
         private static ConcurrentDictionary<string, string> _refreshTokens = new ConcurrentDictionary<string, string>();
 
